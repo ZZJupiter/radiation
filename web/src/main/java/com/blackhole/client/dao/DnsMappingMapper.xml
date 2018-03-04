@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blackhole.client.dao.DnsMappingMapper">
+
+    <sql id="allColumn">
+        id,
+        profileId,
+        ip,
+        domain,
+        created,
+        updated,
+        memo
+    </sql>
+
+    <!-- 根据配置ID 查询DNS映射 -->
+    <select id="selectByProfile" resultType="com.blackhole.client.model.DnsMapping">
+      select <include refid="allColumn"/>
+        from dnsMapping
+        where profileId = #{profileId}
+        order by updated desc
+    </select>
+
+    <!-- 通过配置文件删除配置 -->
+    <delete id="deleteByProfileId">
+        delete from dnsMapping where profileId = #{profileId}
+    </delete>
+
+
+</mapper>

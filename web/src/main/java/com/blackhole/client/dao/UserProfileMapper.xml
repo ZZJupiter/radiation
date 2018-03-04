@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blackhole.client.dao.UserProfileMapper">
+
+    <sql id="all_column">
+        id,
+        profileName,
+        creator,
+        created,
+        updated,
+        memo
+    </sql>
+
+    <!-- 根据创建人列表查询用户配置 -->
+    <select id="selectByCreator" resultType="com.blackhole.client.model.UserProfile">
+      select <include refid="all_column"/>
+        from userProfile
+        where creator in
+        <foreach collection="creatorList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by updated desc
+    </select>
+
+</mapper>
